@@ -45,4 +45,4 @@ group :development, :test do
   gem 'capybara'
 end
 
-ruby "2.1.4"
+ruby "2.1.6"
