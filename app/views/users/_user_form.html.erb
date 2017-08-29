@@ -1,0 +1,35 @@
+<div class="wrapper">
+  <% if @user.errors.any? %>
+  <b>Errors:</b>
+  <div>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <!-- SMALL GAME LOGO ON RIGHT -->
+  <img src="<%= asset_path("miner_logo.png") %>" id="mini-logo">
+
+  <div class="new_user_form">
+
+    <%= form_for @user do |f| %>
+      <div><%= f.label :name %>
+      <%= f.text_field :name %></div>
+
+      <div><%= f.label :password %>
+      <%= f.password_field :password %></div>
+
+      <div><%= f.label :password_confirmation, 'Confirm Password' %>
+      <%= f.password_field :password_confirmation%></div>
+
+      <div><%= f.submit "Submit", id: 'gray-button' %></div>
+
+      <div><%= link_to "Back", '/' %></div>
+
+    <% end %>
+
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div>
+
+  <audio autoplay="autoplay" loop="loop">
+    <source src="<%= asset_path("quiet_cave.mp3") %>" type="audio/mpeg">
+    <source src="<%= asset_path("quiet_cave.ogg") %>" type="audio/ogg">
+    <embed height="5" width="10" src="<%= asset_path("quiet_cave.mp3") %>">
+    Your browser does not support game music.
+  </audio>
+
+  <center><h1>Edit Details</h1></center>
+
+    <%= render "user_form" %>
+    <%= link_to "Cancel", @user %>
+
+
+</div>

@@ -1,0 +1,31 @@
+<% if @mine.errors.any? %>
+<b>Errors:</b>
+<ul>
+  <% @mine.errors.full_messages.each do |msg| %>
+  <li><%= msg %></li>
+  <% end %>
+</ul>
+<% end %>
+
+
+
+<div class="wrapper">
+
+  <!-- SMALL GAME LOGO ON RIGHT -->
+  <img src="<%= asset_path("miner_logo.png") %>" id="mini-logo">
+
+
+  <div class="new-mine-form">
+    <div>What is your mine's name?...</div>
+      <br>
+      <%= form_for [@user,@mine] do |f| %>
+        <%= f.label :name %>
+        <%= f.text_field :name %><br>
+        <p>Depth: 0</p>
+        <%= f.submit "Start Mining!", id: "gray-button" %>
+    <% end %>
+  </div>
+</div>
+
+
+

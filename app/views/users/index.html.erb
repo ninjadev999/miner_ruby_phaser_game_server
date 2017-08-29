@@ -1,0 +1,114 @@
+<!-- STORE -->
+
+<!-- INCLUDES ALL SCRIPT FILES, FOR USE ON THIS PAGE -->
+<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+<div class="store-wrapper">
+
+   <audio autoplay="autoplay" loop="loop">
+    <source src="<%= asset_path("store.mp3") %>" type="audio/mpeg">
+    <source src="<%= asset_path("store.ogg") %>" type="audio/ogg">
+    <embed height="5" width="10" src="<%= asset_path("store.mp3") %>">
+    Your browser does not support game music.
+  </audio>
+
+  <% if @user.errors.any? %>
+  <b>Errors:</b>
+  <ul>
+  <% @user.errors.full_messages.each do |msg| %>
+  <li><%= msg %></li>
+  <% end %>
+  </ul>
+  <% end %>
+
+  <!-- STORE LOGO -->
+  <img src="<%= asset_path("store_sign.png") %>" id="store-logo">
+
+  <div class="store-menu">
+    <div>Available funds: <h1>$<%= @user.dollars %></h1></div>
+    <div>Current Equipment: <h1><%= @tool.name %></h1></div>
+  </div>
+
+  <div class="store-menu">
+    <h3>Inventory</h3>
+    <ol>
+      <table>
+        <% @tools.each do |tool| %>
+          <tr>
+          <td width="200px">
+            <li><%= tool.name %>
+          </td>
+          <td width="100px">
+            $<%= number_with_delimiter(tool.price, :delimiter => ',') %>
+          </td>
+          <td>
+            <button class='buy-tool-button' id='<%=tool.id %>' name='<%=tool.name %>'>Buy Tool</button></li>
+          </td>
+          </tr>
+        <% end %>
+      </table>
+    </ol>
+
+    <p><%= link_to "Return to HQ", user_path %><img src="<%= asset_path("mine_door.png") %>" id="logo" width=20%></a>
+    </p>
+
+  </div>
+
+
+
+</div>
+
+<script>
+
+function buyTool() {
+
+  $.ajax({
+    type: 'PATCH',
+    headers: {
+    'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
+    },
+    url: '<%= update_tool_path %>',
+    dataType: "JSON",
+    async: true,
+    data: {
+      'user_id' : <%= @user.id %>,
+      'toolId' : toolId
+    },
+    success: function(json){
+      console.log(json);
+      if(json.status === "error"){
+        window.alert(json.message);
+        location.reload(true);
+      }
+      else{
+       cashRegister.play();
+       window.alert(json.message);
+       location.reload(true);
+      }
+    },
+    error: function(json){
+      console.log(json.message);
+    },
+
+  });
+
+};
+
+
+$('.buy-tool-button').click(function(){
+  toolId = this.id;
+  toolName = this.name;
+  buyTool();
+  // location.reload(true);
+  // cashRegister.play();
+  // window.alert('You purchased a ' + toolName + '.');
+
+});
+
+$(document).ready(function() {
+  cashRegister = document.createElement("audio");
+  cashRegister.setAttribute("src", "<%= asset_path('register.mp3')%>" );
+  $.get();
+});
+
+</script>

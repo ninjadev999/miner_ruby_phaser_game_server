@@ -1,0 +1,84 @@
+<!-- PLAYER HEADQUARTERS PAGE -->
+
+<div class="hq-wrapper">
+
+  <audio autoplay="autoplay" loop="loop">
+    <source src="<%= asset_path("quiet_cave.mp3") %>" type="audio/mpeg">
+    <source src="<%= asset_path("quiet_cave.ogg") %>" type="audio/ogg">
+    <embed height="5" width="10" src="<%= asset_path("quiet_cave.mp3") %>">
+    Your browser does not support game music.
+  </audio>
+
+  <!-- SMALL GAME LOGO ON RIGHT -->
+  <img src="<%= asset_path("miner_logo.png") %>" id="mini-logo">
+
+  <!-- GEM LOGO WITH NAME  -->
+  <div id="hq">
+    <h1 id="hq-name"><%= @user.name.capitalize %></h1>
+  </div>
+
+<!-- MAP OF MINE PROGRESS -->
+
+
+    <div class="map">
+
+      <img src="<%= asset_path("animated_mine.gif") %>" id="mine-progress-image"
+     height="<%= (@mine.depth/2000)+ 5 %>px" width="4px" alt="Current Depth : <%= @mine.depth %>">
+
+     <a href="http://en.wikipedia.org/wiki/Lithosphere" class="crust" target="_blank">Crust</a><br>
+     <a href="http://en.wikipedia.org/wiki/Asthenosphere" class="crust" target="_blank">Asthenosphere</a><br>
+     <a href="http://en.wikipedia.org/wiki/Mantle_(geology" class="crust" target="_blank">Mantle</a><br>
+     <a href="http://en.wikipedia.org/wiki/Earths_core" class="crust" target="_blank">Core</a><br>
+    </div>
+
+
+
+ <!--  PLAYER STATS -->
+  <div class="stats">
+    <table id='stats'>
+      <tr>
+        <td><p id='stat-detail'>Funds:</td><td><h1> $<%= number_with_delimiter(@user.dollars, :delimiter => ',') %></h1></td></tr>
+      <tr>
+        <td><p id='stat-detail'>Mine Name:</td><td> <%= @mine.name %></td></tr>
+      <tr>
+        <td><p id='stat-detail'>Depth:</td><td> <%= number_with_delimiter((@mine.depth*10).ceil / 10.0, :delimiter => ',') %> feet</td></tr>
+      <tr>
+        <td><p id='stat-detail'>Equipment:</td> <td><%= @tool.name %></td></tr>
+      </table>
+  </div>
+
+  <div id="hq-button-wrapper">
+
+    <div>
+      <p><%= link_to "Go Mining", user_mine_path(@user, @mine) %>
+        <img src="<%= asset_path("shovel.png") %>" width=10%></a></p>
+    </div>
+
+    <div>
+      <p><%= link_to "Buy Equipment", controller: "users", action: "index", id: @user %>
+        <img src="<%= asset_path("sack.png") %>" width=10%></a></p>
+    </div>
+
+    <div>
+      <p><%= link_to "Change Password", edit_user_path(@user) %>
+        <img src="<%= asset_path("deed.png") %>" width=10%></a></p>
+    </div>
+
+    <div id='hall-of-fame'>
+      <p><%= link_to "Hall of Fame", museum_path %>
+        <img src="<%= asset_path("trophy.png") %>" width=16% align=right></p>
+    </div>
+
+
+    <div class="nav_block">
+        <div class="log" id="quit-from-hq">
+          <%= form_for :session, url: logout_path, method: 'delete' do |f| %>
+            <p><%= f.submit "Quit Game", id: 'gray-button' %>
+            <img src="<%=   asset_path("mine_door.png") %>" width=20% align=right></p>
+          <% end %>
+        </div>
+    </div>
+
+  </div>
+
+</div>
