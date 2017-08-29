@@ -44,7 +44,7 @@ gem 'platform-api'
 
 group :development, :test do
 
-  gem 'rspec-rails', '~> 2.14.0'
+  gem 'rspec-rails', '~> 3.5.1'
   gem 'shoulda-matchers'
   gem 'capybara'
 end
